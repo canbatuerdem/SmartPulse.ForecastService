@@ -1,0 +1,36 @@
+sequenceDiagram
+    participant C as Client
+    participant API as Forecast API<br/>(/api/forecast)
+    participant S as ForecastService
+    participant PP as IPowerPlantRepository
+    participant FR as IForecastRepository
+    participant DB as SQL Server<br/>(ForecastDb)
+    participant MQ as RabbitMQ<br/>(position.changed)
+
+    C->>API: POST /api/forecast<br/>ForecastDto
+    API->>S: UpsertForecastAsync(ForecastDto)
+
+    S->>S: Normalize timestamp<br/>(truncate to full hour UTC)
+
+    S->>PP: GetByCodeAsync(plantCode)
+    PP->>DB: SELECT PowerPlant WHERE Code = plantCode
+    DB-->>PP: PowerPlant(Id, Code, Country)
+    PP-->>S: PowerPlant
+
+    S->>FR: GetByKeyAsync(plantId, hourUtc)
+    FR->>DB: SELECT Forecast<br/>WHERE PowerPlantId & HourUtc
+    DB-->>FR: Existing Forecast or null
+    FR-->>S: Forecast?    
+
+    alt Existing forecast & quantity changed
+        S->>FR: Update forecast quantity
+        FR->>DB: UPDATE Forecast<br/>(temporal history writes to history table)
+        S->>MQ: Publish PositionChangedEvent
+    else No forecast exists
+        S->>FR: Insert new Forecast
+        FR->>DB: INSERT Forecast<br/>(temporal history enabled)
+        S->>MQ: Publish PositionChangedEvent
+    end
+
+    S-->>API: Completed (no content)
+    API-->>C: 200 OK

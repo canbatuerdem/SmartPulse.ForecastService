@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36717.8
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartPulse.ForecastService.Api", "SmartPulse.ForecastService.Api\SmartPulse.ForecastService.Api.csproj", "{3BDD605B-0C25-40D2-92BF-047A10D536B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartPulse.ForecastService.Service", "SmartPulse.ForecastService.Service\SmartPulse.ForecastService.Service.csproj", "{AF5E1810-D52F-441E-AD2C-4AF396DE37F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartPulse.ForecastService.Repository", "SmartPulse.ForecastService.Repository\SmartPulse.ForecastService.Repository.csproj", "{F58D5E8F-0E40-4C64-BD3C-4ED8C587AC15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartPulse.ForecastService.Tests", "SmartPulse.ForecastService.Tests\SmartPulse.ForecastService.Tests.csproj", "{2B1598CA-F4C1-41F4-96E6-719A363E9B77}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		API_Draft.md = API_Draft.md
+		DecisionLog.md = DecisionLog.md
+		docker-compose.yml = docker-compose.yml
+		High-Level Architecture Diagram.mermaid = High-Level Architecture Diagram.mermaid
+		README.md = README.md
+		Upsert Forecast Sequence Diagram.mermaid = Upsert Forecast Sequence Diagram.mermaid
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BDD605B-0C25-40D2-92BF-047A10D536B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BDD605B-0C25-40D2-92BF-047A10D536B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BDD605B-0C25-40D2-92BF-047A10D536B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BDD605B-0C25-40D2-92BF-047A10D536B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF5E1810-D52F-441E-AD2C-4AF396DE37F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF5E1810-D52F-441E-AD2C-4AF396DE37F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF5E1810-D52F-441E-AD2C-4AF396DE37F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF5E1810-D52F-441E-AD2C-4AF396DE37F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F58D5E8F-0E40-4C64-BD3C-4ED8C587AC15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F58D5E8F-0E40-4C64-BD3C-4ED8C587AC15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F58D5E8F-0E40-4C64-BD3C-4ED8C587AC15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F58D5E8F-0E40-4C64-BD3C-4ED8C587AC15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B1598CA-F4C1-41F4-96E6-719A363E9B77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B1598CA-F4C1-41F4-96E6-719A363E9B77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B1598CA-F4C1-41F4-96E6-719A363E9B77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B1598CA-F4C1-41F4-96E6-719A363E9B77}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1E30F00-4E72-4638-9DCB-B84ABEBA7A10}
+	EndGlobalSection
+EndGlobal
