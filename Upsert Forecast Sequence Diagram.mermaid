@@ -11,26 +11,30 @@ sequenceDiagram
     API->>S: UpsertForecastAsync(ForecastDto)
 
     S->>S: Normalize timestamp<br/>(truncate to full hour UTC)
+    alt ForecastHourUtc < UtcNow
+        S-->>API: Validation error (past date)
+        API-->>C: 400 Bad Request
+    else ForecastHourUtc >= UtcNow
+        S->>PP: GetByCodeAsync(plantCode)
+        PP->>DB: SELECT PowerPlant WHERE Code = plantCode
+        DB-->>PP: PowerPlant(Id, Code, Country)
+        PP-->>S: PowerPlant
 
-    S->>PP: GetByCodeAsync(plantCode)
-    PP->>DB: SELECT PowerPlant WHERE Code = plantCode
-    DB-->>PP: PowerPlant(Id, Code, Country)
-    PP-->>S: PowerPlant
+        S->>FR: GetByKeyAsync(plantId, hourUtc)
+        FR->>DB: SELECT Forecast<br/>WHERE PowerPlantId & HourUtc
+        DB-->>FR: Existing Forecast or null
+        FR-->>S: Forecast?    
 
-    S->>FR: GetByKeyAsync(plantId, hourUtc)
-    FR->>DB: SELECT Forecast<br/>WHERE PowerPlantId & HourUtc
-    DB-->>FR: Existing Forecast or null
-    FR-->>S: Forecast?    
+        alt Existing forecast & quantity changed
+            S->>FR: Update forecast quantity
+            FR->>DB: UPDATE Forecast<br/>(temporal history writes to history table)
+            S->>MQ: Publish PositionChangedEvent
+        else No forecast exists
+            S->>FR: Insert new Forecast
+            FR->>DB: INSERT Forecast<br/>(temporal history enabled)
+            S->>MQ: Publish PositionChangedEvent
+        end
 
-    alt Existing forecast & quantity changed
-        S->>FR: Update forecast quantity
-        FR->>DB: UPDATE Forecast<br/>(temporal history writes to history table)
-        S->>MQ: Publish PositionChangedEvent
-    else No forecast exists
-        S->>FR: Insert new Forecast
-        FR->>DB: INSERT Forecast<br/>(temporal history enabled)
-        S->>MQ: Publish PositionChangedEvent
+        S-->>API: Completed (no content)
+        API-->>C: 200 OK
     end
-
-    S-->>API: Completed (no content)
-    API-->>C: 200 OK
