@@ -1,14 +1,13 @@
 flowchart LR
-    Client["Client / UI / External System"]
-    Api["SmartPulse Forecast API<br/>(ASP.NET Core, Controllers)"]
-    Service["Forecast Service<br/>(Application Layer)"]
-    Infra["Repository & Event Publisher<br/>(Infrastructure Layer)"]
-    Db["SQL Server<br/>(ForecastDb, Temporal Tables)"]
-    Mq["RabbitMQ<br/>(position.changed Exchange)"]
-
-    Client --> Api
-    Api --> Service
-    Service --> Infra
-
-    Infra -->|EF Core<br/>ForecastDbContext| Db
-    Infra -->|PositionChangedEvent| Mq
+    subgraph F[🖥️ Forecast Service API]
+        C[Controllers]
+        S[Services]
+        R[Repositories]
+    end
+    DB["🗄️ SQL Server"]
+    MQ["🐇 RabbitMQ"]
+    C --> S
+    S --> R
+    R --> DB
+    R --> MQ
+    U[👤 External System] --> C
